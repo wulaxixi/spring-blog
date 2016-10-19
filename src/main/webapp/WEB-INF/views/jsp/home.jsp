@@ -61,8 +61,29 @@
         <div class="col-sm-3 col-xs-12"><!--Sidebar start-->
             <blog-tags:blogSidebar />
         </div><!--Sidebar end-->
+        <div class="progressDiv">
+        	<button onclick="calculate()">begin caluate</button>
+        	<br/>
+        	progress:has done<span class="onProgressSpan"></span>  /totle 100.
+        </div>
         
     </div>
 </div>
+<script type="text/javascript">
+	function calculate(){ 
+		debugger;
+		var htmlobj=$.ajax({url:"/ProgressBar/plus",async:false});
+		$(".onProgressSpan").html(htmlobj.responseText);
+		var i = setInterval(function() {
+			var result=$.ajax({url:"/ProgressBar/rtnProgress",async:false});
+			
+			console.log(result.responseText);
+			$(".onProgressSpan").html(result.responseText);
+            if (result.responseText >= 100)
+                clearInterval(i);
+        }, 1000);
+	}
+	
+</script>
 
 <blog-tags:footer />
